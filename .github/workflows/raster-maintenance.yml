@@ -1,0 +1,24 @@
+# Taktgeber für den Discord-Bot Raster: ruft alle 5 Minuten den Aufräumlauf auf (leere eigene Sprachkanäle löschen).
+# Der Worker hat keinen eigenen Cron, das Limit des Cloudflare-Kontos ist voll.
+# Secret RASTER_KEY = SETUP_KEY des Workers (Repo → Settings → Secrets and variables → Actions).
+name: raster-maintenance
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: raster-maintenance
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Aufräumlauf anstoßen
+        env:
+          RASTER_KEY: ${{ secrets.RASTER_KEY }}
+        run: |
+          curl --fail --silent --show-error --max-time 60 --retry 2 \
+            -X POST -H "Authorization: Bearer ${RASTER_KEY}" \
+            https://fynnland-discord-bot.fynn-hansen.workers.dev/maintenance
