@@ -7,4 +7,4 @@ verschwinden.
 Der Aufruf ist durch ein Secret (`RASTER_KEY`) geschützt, das nicht in diesem Repo steht. Ohne Schlüssel antwortet der Worker
 mit 403.
 
-Ticks & Intervall: GitHub startet geplante Läufe nach bestem Bemühen, einzelne Läufe können sich um einige Minuten verspäten.
+Hinweis: GitHub startet geplante Läufe nach bestem Bemühen, einzelne Läufe können sich um einige Minuten verspäten.
